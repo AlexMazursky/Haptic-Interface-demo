@@ -11,7 +11,7 @@ class FSR
   int fsrReading;     // the analog reading from the FSR resistor divider
   // State Maintenance
   unsigned long previousMillis_FSR; // stores the last time the fsrReading is updated
-  long interval = 50;  // interval at which to read FSR (milliseconds)
+  long interval = 10;  // interval at which to read FSR (milliseconds)
 
   // Constructor - creates an FSR 
   // and initializes the member variables and state
@@ -33,9 +33,9 @@ class FSR
     // save the last time you read the FSR 
     previousMillis_FSR = currentMillis_FSR;   
     fsrReading = analogRead(fsrPin);   
-    Serial.print("Analog reading = ");
-    Serial.print(fsrReading);     // the raw analog reading
-    Serial.println();
+    //Serial.print("Analog reading = ");
+    Serial.println(fsrReading);     // the raw analog reading
+    //Serial.println();
     } 
   }
 };
@@ -104,17 +104,9 @@ Square sqsignal(3); // at PIN 3
 
 void setup(){
   Serial.begin(9600); // Don't change!
-  establishContact(); // send a byte to establish contact until receiver responds
 }
 
 void loop(){
   fsr.Update();
   sqsignal.Update(); // Merely loops through updating the signal!
-}
-
-void establishContact() {
-  while (Serial.available() <= 0) {
-  Serial.println("A");   // send a capital A
-  delay(300);
-  }
 }
